@@ -1,0 +1,20 @@
+{
+  "name": "cadi-node-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CADI",
+    "Database",
+    "MySQL",
+    "Multiple Databases",
+    "Database Transactions",
+    "Node.js"
+  ],
+  "author": "Leon Mainusch",
+  "license": "ISC"
+}
