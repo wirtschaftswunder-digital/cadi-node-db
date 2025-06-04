@@ -3,7 +3,9 @@ import type { QueryDbParams, QueryDbParseParams, SqlQueryInp } from "./types"
 import { z, type ZodTypeAny } from "zod"
 import { subdomainPoolMap } from "./connection"
 import { releaseDbConnectionSafe } from "./connection"
-import { schemaAnyArray, validateAndFilter } from "./validation"
+
+
+export const schemaAnyArray = z.array(z.any())
 
 
 export const schemaOkPacket = z.object({
@@ -12,6 +14,9 @@ export const schemaOkPacket = z.object({
     changedRows: z.number(),
     fieldCount: z.number(),
 })
+
+
+export type OkPacket = z.infer<typeof schemaOkPacket>
 
 
 export async function queryDbAndParse<T extends ZodTypeAny>(params: QueryDbParseParams<T>) {
@@ -75,3 +80,17 @@ export function asyncQueryOnConnection(query: SqlQueryInp, connection: Awaited<R
             connection.query(query, callback)
     })
 }
+
+
+export function validateAndFilter<T extends z.ZodTypeAny>(input: unknown[], schema: T) {
+    return input
+        .map(item => schema.safeParse(item))
+        .filter(item => item.success)
+        .map(item => item.data) as z.infer<T>[];
+}
+
+
+export * from "./types"
+export { releaseDbConnectionSafe } from "./connection"
+export { loadUnitTestDbCredentials } from "./credentials"
+export { queryDbTransaction } from "./transactions"

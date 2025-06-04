@@ -1,6 +1,5 @@
 import { expect, test } from "vitest";
-import { queryDbAndParse } from ".";
-import { schemaAnyArray } from "./validation";
+import { queryDbAndParse, schemaAnyArray } from ".";
 
 
 test("Perform simple query using connection pool", { repeats: 12 }, async () => {
