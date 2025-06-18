@@ -18,7 +18,7 @@ function createPoolForCredentials(credentials: DbCredentials) {
     const { database, host, password, user } = credentials
     return createPool({
         database, host, password, user,
-        connectionLimit: 5, // Adjust based on workload
+        connectionLimit: process.env.DB_POOL_CONNECTION_LIMIT ? parseInt(process.env.DB_POOL_CONNECTION_LIMIT) : 5, // Adjust based on workload
         queueLimit: 100000,    // Limit queued requests
         acquireTimeout: 10000, // Wait time for acquiring a connection
         waitForConnections: true, // Enable queuing 
